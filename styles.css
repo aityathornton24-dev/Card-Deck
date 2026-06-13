@@ -1,0 +1,215 @@
+/* RESET */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  background: radial-gradient(circle at top, #2b2d42 0, #0b1020 55%, #050712 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden; /* Prevents scrollbars from the blurred background */
+  position: relative; /* Absolute anchor for the background elements */
+}
+
+/* ----------------------------- */
+/* BACKGROUND POKEBALL EFFECT    */
+/* ----------------------------- */
+
+/* Main Pokéball body (Red top, white bottom) attached to body */
+body::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: linear-gradient(
+    to bottom,
+    #ef4444 0%,
+    #ef4444 46%,
+    #1e293b 46%,
+    #1e293b 54%,
+    #f8fafc 54%,
+    #f8fafc 100%
+  );
+  filter: blur(35px) opacity(0.22); 
+  z-index: 0;
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Pokéball center button attached to body */
+body::after {
+  content: "";
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  background: #f8fafc;
+  border: 18px solid #1e293b;
+  border-radius: 50%;
+  filter: blur(35px) opacity(0.22);
+  z-index: 0;
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ----------------------------- */
+/* PLAYING CARD DECK LAYOUT      */
+/* ----------------------------- */
+
+.card-deck {
+  position: relative;
+  z-index: 2; /* Forces cards to stay cleanly above the background ball */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-top: 2rem;
+}
+
+.pokemon-card {
+  width: 240px;
+  background: #0f172a;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+
+  /* Deck overlap */
+  margin-left: -60px;
+
+  /* Slight rotation for deck look */
+  transform: rotate(-3deg);
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    z-index 150ms ease;
+
+  cursor: pointer;
+  position: relative;
+}
+
+/* First card tweak to offset the global negative margin */
+.pokemon-card:first-child {
+  margin-left: 0;
+}
+
+/* Middle card rotation */
+.pokemon-card:nth-child(2) {
+  transform: rotate(0deg);
+}
+
+/* Third card rotation */
+.pokemon-card:nth-child(3) {
+  transform: rotate(3deg);
+}
+
+/* Hover: card pops out of deck */
+.pokemon-card:hover {
+  transform: rotate(0deg) translateY(-25px) scale(1.08);
+  z-index: 10;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.65);
+}
+
+/* ----------------------------- */
+/* IMAGE AREA                    */
+/* ----------------------------- */
+
+.pokemon-image {
+  height: 220px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0.75rem;
+  overflow: hidden;
+}
+
+.pokemon-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 200px;
+}
+
+/* ----------------------------- */
+/* INDIVIDUAL POKEMON THEMES     */
+/* ----------------------------- */
+
+.pikachu {
+  background: radial-gradient(circle at 20% 0%, #facc15 0, #f97316 40%, #b45309 100%);
+}
+.pikachu::before {
+  background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png");
+}
+
+.charizard {
+  background: radial-gradient(circle at 20% 0%, #fb923c 0, #b91c1c 40%, #7f1d1d 100%);
+}
+.charizard::before {
+  background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png");
+}
+
+.bulbasaur {
+  background: radial-gradient(circle at 20% 0%, #4ade80 0, #16a34a 40%, #14532d 100%);
+}
+.bulbasaur::before {
+  background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png");
+}
+
+/* ----------------------------- */
+/* CONTENT AREA                  */
+/* ----------------------------- */
+
+.pokemon-content {
+  padding: 1.1rem 1.25rem 1.3rem;
+}
+
+.pokemon-name {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #e5e7eb;
+}
+
+.pokemon-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+.pokemon-stats li {
+  display: flex;
+  justify-content: space-between;
+  color: #cbd5f5;
+}
+
+.pokemon-stats li span:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+.pokemon-stats li span:last-child {
+  font-weight: 600;
+  color: #e5e7eb;
+}
